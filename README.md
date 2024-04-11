@@ -1,5 +1,11 @@
-# 这是一个基于 esp32-c3-devkitm-1 开发的小模块
+# oled 128x64
 
-> 查看不同的分支去寻找模块
+> 主要实现了基本的点亮，需要注意的是pin脚的选择，以及分辨率的设置，在本次中，sda接了2，scl接了3，vcc接了3.3v，gnd接了GND。
 
-1. [共阴极四位数码管](https://github.com/CnsMaple/esp32-c3-devkitm-1/tree/common-cathode-4seg)
+## 产品
+
+[淘宝购买链接](https://m.tb.cn/h.garUZNdogwuOMnd?tk=WEg2Wqt5Dg1)
+
+## 效果
+
+![](img/oledShow.jpg)
