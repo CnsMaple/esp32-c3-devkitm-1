@@ -2,12 +2,62 @@
 
 #include "ShowNum.h"
 
-// warning: 这里要修改成对应的引脚
-std::array<uint8_t, 7> numPin = {1, 2, 3, 4, 5, 6, 7};
-std::vector<uint8_t> numLoc = {0, 8, 9, 10};
+bool checkString(std::string str)
+{
+  if (str.empty())
+  {
+    return false;
+  }
+  else if (str.size() < 4 || str.size() > 8)
+  {
+    return false;
+  }
 
-std::string numStore = "1234";
-ShowNum showNum(numPin, numLoc);
+  std::string retStr = "";
+  bool preDot = false;
+  int dotCount = 0;
+  int digitCount = 0;
+  for (int i = 0; i < str.size(); i++)
+  {
+    char c = str[i];
+    if (c >= '0' && c <= '9')
+    {
+      retStr += c;
+      digitCount++;
+      if (preDot)
+      {
+        preDot = false;
+      }
+    }
+    else if (c == '.')
+    {
+      if (preDot || i == 0)
+      {
+        return false;
+      }
+      else
+      {
+        preDot = true;
+      }
+      retStr += c;
+      dotCount++;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  if (digitCount != 4)
+  {
+    return false;
+  }
+  return true;
+}
+
+// 这个是需要展示的数字
+std::string numStore = "0000";
+// 设置针脚，第一个是数字的，从a-g，第二个数字的位置，第三个是小数点
+ShowNum showNum({1, 2, 3, 4, 5, 6, 7}, {0, 8, 9, 10}, 19);
 
 void setup()
 {
@@ -21,24 +71,16 @@ void loop()
   {
     uint8_t bufferSize = 16;
     uint8_t buffer[bufferSize];
-    int incomingByte = Serial.read(buffer, bufferSize);
-    if (incomingByte > showNum.getNumSize())
+    Serial.read(buffer, bufferSize);
+    bool status = checkString((char *)buffer);
+    Serial.println((char *)buffer);
+    if (status)
     {
-      incomingByte = showNum.getNumSize();
+      numStore = (char *)buffer;
     }
-    std::string str = "";
-    for (int i = 0; i < showNum.getNumSize() && i < incomingByte; i++)
+    else
     {
-      char c = (char)buffer[i];
-      if (c >= '0' && c <= '9')
-      {
-        str += c;
-      }
+      Serial.println("Invalid input");
     }
-    for (int i = 0; i < showNum.getNumSize() - incomingByte; i++)
-    {
-      str = "0" + str;
-    }
-    numStore = str;
   }
 }

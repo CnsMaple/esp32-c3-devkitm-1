@@ -1,10 +1,12 @@
 #include "ShowNum.h"
 
-ShowNum::ShowNum(std::array<uint8_t, 7> pin, std::vector<uint8_t> numLoc)
+ShowNum::ShowNum(std::array<uint8_t, 7> pin, std::vector<uint8_t> numLoc, uint8_t dot)
 {
     this->pin = pin;
     this->numLoc = numLoc;
     this->numSize = this->numLoc.size();
+    this->dot = dot;
+    pinMode(this->dot, OUTPUT);
     for (auto i : this->pin)
     {
         pinMode(i, OUTPUT);
@@ -17,9 +19,10 @@ ShowNum::ShowNum(std::array<uint8_t, 7> pin, std::vector<uint8_t> numLoc)
     }
 }
 
-void ShowNum::setNum(char num)
+void ShowNum::setLoc(char loc)
 {
-    if (num == '1')
+    digitalWrite(this->dot, LOW);
+    if (loc == '1')
     {
         digitalWrite(pin[0], LOW);
         digitalWrite(pin[1], HIGH);
@@ -29,7 +32,7 @@ void ShowNum::setNum(char num)
         digitalWrite(pin[5], LOW);
         digitalWrite(pin[6], LOW);
     }
-    else if (num == '2')
+    else if (loc == '2')
     {
         digitalWrite(pin[0], HIGH);
         digitalWrite(pin[1], HIGH);
@@ -39,7 +42,7 @@ void ShowNum::setNum(char num)
         digitalWrite(pin[5], LOW);
         digitalWrite(pin[6], HIGH);
     }
-    else if (num == '3')
+    else if (loc == '3')
     {
         digitalWrite(pin[0], HIGH);
         digitalWrite(pin[1], HIGH);
@@ -49,7 +52,7 @@ void ShowNum::setNum(char num)
         digitalWrite(pin[5], LOW);
         digitalWrite(pin[6], HIGH);
     }
-    else if (num == '4')
+    else if (loc == '4')
     {
         digitalWrite(pin[0], LOW);
         digitalWrite(pin[1], HIGH);
@@ -59,7 +62,7 @@ void ShowNum::setNum(char num)
         digitalWrite(pin[5], HIGH);
         digitalWrite(pin[6], HIGH);
     }
-    else if (num == '5')
+    else if (loc == '5')
     {
         digitalWrite(pin[0], HIGH);
         digitalWrite(pin[1], LOW);
@@ -69,7 +72,7 @@ void ShowNum::setNum(char num)
         digitalWrite(pin[5], HIGH);
         digitalWrite(pin[6], HIGH);
     }
-    else if (num == '6')
+    else if (loc == '6')
     {
         digitalWrite(pin[0], HIGH);
         digitalWrite(pin[1], LOW);
@@ -79,7 +82,7 @@ void ShowNum::setNum(char num)
         digitalWrite(pin[5], HIGH);
         digitalWrite(pin[6], HIGH);
     }
-    else if (num == '7')
+    else if (loc == '7')
     {
         digitalWrite(pin[0], HIGH);
         digitalWrite(pin[1], HIGH);
@@ -89,7 +92,7 @@ void ShowNum::setNum(char num)
         digitalWrite(pin[5], LOW);
         digitalWrite(pin[6], LOW);
     }
-    else if (num == '8')
+    else if (loc == '8')
     {
         digitalWrite(pin[0], HIGH);
         digitalWrite(pin[1], HIGH);
@@ -99,7 +102,7 @@ void ShowNum::setNum(char num)
         digitalWrite(pin[5], HIGH);
         digitalWrite(pin[6], HIGH);
     }
-    else if (num == '9')
+    else if (loc == '9')
     {
         digitalWrite(pin[0], HIGH);
         digitalWrite(pin[1], HIGH);
@@ -109,7 +112,7 @@ void ShowNum::setNum(char num)
         digitalWrite(pin[5], HIGH);
         digitalWrite(pin[6], HIGH);
     }
-    else if (num == '0')
+    else if (loc == '0')
     {
         digitalWrite(pin[0], HIGH);
         digitalWrite(pin[1], HIGH);
@@ -118,6 +121,10 @@ void ShowNum::setNum(char num)
         digitalWrite(pin[4], HIGH);
         digitalWrite(pin[5], HIGH);
         digitalWrite(pin[6], LOW);
+    }
+    else if (loc == '.')
+    {
+        digitalWrite(this->dot, HIGH);
     }
     else
     {
@@ -133,17 +140,18 @@ void ShowNum::setNum(char num)
 
 void ShowNum::setNum(std::string num)
 {
-    if (num.size() != this->numLoc.size())
-    {
-        return;
-    }
-
+    int numCount = -1;
     for (int i = 0; i < num.size(); i++)
     {
-        digitalWrite(numLoc[i], LOW);
-        setNum(num[i]);
+        char c = num[i];
+        if (c >= '0' && c <= '9')
+        {
+            numCount++;
+        }
+        digitalWrite(numLoc[numCount], LOW);
+        setLoc(c);
         delay(1);
-        digitalWrite(numLoc[i], HIGH);
+        digitalWrite(numLoc[numCount], HIGH);
     }
 }
 
