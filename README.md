@@ -1,10 +1,13 @@
-# 这是一个基于 esp32-c3-devkitm-1 开发的小模块
+# touch 触摸开关
 
-> 查看不同的分支去寻找模块
+> 基本的接收 touch 触摸开关的信号，这里主要设置的针脚是 2
 
-1. [共阴极四位数码管](https://github.com/CnsMaple/esp32-c3-devkitm-1/tree/common-cathode-4seg)
+## 产品
 
-   > 只接了共阴极四位数码管，主要功能是串口设置数字显示。
+[淘宝购买链接](https://m.tb.cn/h.5AODIWD?tk=qOfYWqtNHG5)
 
-2. [oled12864](https://github.com/CnsMaple/esp32-c3-devkitm-1/tree/oled12864)
-   > 只接了 oled12864，主要实现了屏幕的点亮并显示文字。
+## 效果
+
+通过触摸，灯会熄灭。
+
+![](img/touchShow.jpg)
