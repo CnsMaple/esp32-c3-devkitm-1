@@ -21,7 +21,7 @@ DHT dht(DHTPIN, DHTTYPE);
 
 void setup()
 {
-  // 设置针脚，sda为2，scl为3
+  // 设置针脚，sda为3，scl为2
   Wire.setPins(3, 2);
   Serial.begin(115200);
 
