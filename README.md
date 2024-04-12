@@ -8,3 +8,5 @@
    > 只接了 oled12864，主要实现了屏幕的点亮并显示文字。
 3. [touch 触摸开关](https://github.com/CnsMaple/esp32-c3-devkitm-1/tree/touch)
    > 只接了 touch 触摸开关，主要是获取了开关的信号。
+4. [dht22 温湿度传感器](https://github.com/CnsMaple/esp32-c3-devkitm-1/tree/dht22)
+   > 只接了 dht22 温湿度传感器，主要是实现数据获取。
